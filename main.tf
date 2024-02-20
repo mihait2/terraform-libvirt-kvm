@@ -1,7 +1,14 @@
+resource "libvirt_pool" "cluster" {
+  name = "clustermilo"
+  type = "dir"
+  path = "/home/milo/images"
+}
+
+
 resource "libvirt_volume" "volumes" {
         name = "volumes"
-        pool = "images"
-        source = "/home/milo/Desktop/KVM-VMBUILD-TERRAFORM/Ubuntu_server.img"
+        pool = libvirt_pool.cluster.name
+        source = "/home/milo/terraform-libvirt-kvm/Ubuntu_server.img"
         format = "qcow2"
 }
 
@@ -31,4 +38,3 @@ resource "libvirt_domain" "host" {
             autoport = true
         }
 }
-
