@@ -1,40 +1,13 @@
-resource "libvirt_pool" "cluster" {
-  name = "clustermilo"
-  type = "dir"
-  path = "/home/milo/images"
+module "volume"{
+source="./modules/volume"
+volume_count=var.volume_count
+volume_name=var.volume_name
 }
 
-
-resource "libvirt_volume" "volumes" {
-        name = "volumes"
-        pool = libvirt_pool.cluster.name
-        source = "/home/milo/terraform-libvirt-kvm/Ubuntu_server.img"
-        format = "qcow2"
+module"domain"{
+source="./modules/domain"
+volume_id=module.volume.volume_ids[0]
+cloud_id = module.volume.commoninit.id
+host_list = var.host_list
 }
 
-resource "libvirt_domain" "host" {
-        name   = "host"
-        memory = "2048"
-        vcpu   = 2
-
-        network_interface {
-            network_name = "default"
-        }
-
-        disk {
-            volume_id = "${libvirt_volume.volumes.id}"
-       }
-
-        console {
-            type = "pty"
-            target_type = "serial"
-            target_port = "0"
-        }
-
-        graphics {
-            type = "vnc"
-            listen_type = "address"
-            listen_address = "0.0.0.0"
-            autoport = true
-        }
-}
