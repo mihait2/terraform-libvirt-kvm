@@ -14,7 +14,7 @@ resource "libvirt_domain" "host" {
         vcpu   = 1
 
 
-cloud_id = var.cloud_id
+cloudinit = var.cloud_id
 
 
         network_interface {
