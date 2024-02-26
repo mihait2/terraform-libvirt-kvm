@@ -1,7 +1,5 @@
 module "volume"{
 source="./modules/volume"
-volume_count=var.volume_count
-volume_name=var.volume_name
 }
 
 module"domain"{

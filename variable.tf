@@ -7,15 +7,6 @@ locals{
 my_hosts=toset(var.host_list)
 }
 
-variable "volume_name"{
-default="host"
-}
-
-variable"volume_count"{
-
-default=1
-
-}
 
 
 
