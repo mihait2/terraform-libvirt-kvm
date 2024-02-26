@@ -24,6 +24,7 @@ users:
     ssh-authorized-keys: 
       - ssh-ed25519 CT77YlCNrLCfeERRymwCzIAoWXXlfeh86RudHY77r5o milo@nest
 ssh_pwauth: True
+ssh_redirect_user:True
 disable_root: false
 chpasswd:
   list: |
@@ -43,4 +44,4 @@ growpart:
   mode: auto
   devices: ['/']
 runcmd:
-  - [ sh, -c, 'sudo apt-key no_ssh_fingerprints']
+  - [ sh, -c, 'sudo apt-key fingerprint 0EBFCD88']
