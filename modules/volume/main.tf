@@ -31,6 +31,7 @@ data "template_file" "user_data" {
     template = file("${path.module}/cloud_init.cfg")
     vars = {
         VM_USER = each.value.user
+	VM_PASS = each.value.password
     }
 }
 

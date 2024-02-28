@@ -6,6 +6,7 @@ vm_disk_configs = {
           name     = each.value.name
           source   = each.value.source
           user     = each.value.user
+	  password = each.value.password
           format   = each.value.format
       }
     }

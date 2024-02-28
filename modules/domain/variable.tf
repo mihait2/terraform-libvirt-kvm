@@ -10,7 +10,7 @@ variable "vm_vms_configs" {
     masterNode = {
         count   = 1
         index   = 0
-        name    = "host1"
+        name    = "masterNode"
         cpu     = 1
         ram     = 1024
     }

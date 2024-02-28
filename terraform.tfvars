@@ -7,6 +7,7 @@ vm_main_configs={
         ram     = 1024
        source   = "https://cloud-images.ubuntu.com/releases/bionic/release/ubuntu-18.04-server-cloudimg-amd64.img"
         user     = "milo"
+  	password = "possible"
         format   = "qcow2"
     }
     workerNode1 = {
@@ -17,6 +18,7 @@ vm_main_configs={
         ram     = 2048
        source   = "https://cloud-images.ubuntu.com/releases/bionic/release/ubuntu-18.04-server-cloudimg-amd64.img"
         user     = "milo"
+        password = "possible"
         format   = "qcow2"
     }
     workerNode2 = {
@@ -27,6 +29,7 @@ vm_main_configs={
         ram     = 2048
        source   = "https://cloud-images.ubuntu.com/releases/bionic/release/ubuntu-18.04-server-cloudimg-amd64.img"
         user     = "milo"
+	password = "possible"
         format   = "qcow2"
     }
 }

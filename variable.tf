@@ -7,6 +7,7 @@ variable "vm_main_configs" {
     ram     = number
    source   = string
    user     = string
+   password = string
    format   = string
   }))
 }
