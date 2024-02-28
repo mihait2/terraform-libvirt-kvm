@@ -1,27 +1,18 @@
-variable "host_list"{
- type=list(string)
- default=["host1","host2","host3","host4","host5"]
-}
-
-locals{
-my_hosts=toset(var.host_list)
-}
-
-
-variable "volume_name"{
-default="host"
-}
-
-variable"volume_count"{
-
-default=1
-
-}
-
-variable "volume_id"{
-description="id of libvirt"
-}
-
-variable "cloud_id"{
-description="id of cloudinit"
+variable "vm_vms_configs" {
+  type = map(object({
+    count   = number
+    index   = number
+    name    = string
+    cpu     = number
+    ram     = number
+  }))
+  default = {
+    masterNode = {
+        count   = 1
+        index   = 0
+        name    = "host1"
+        cpu     = 1
+        ram     = 1024
+    }
+  }
 }

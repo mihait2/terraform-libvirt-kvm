@@ -1,13 +1,12 @@
-variable "host_list"{
- type=list(string)
- default=["host1","host2","host3","host4","host5"]
+variable "vm_main_configs" {
+  type = map(object({
+   count   = number
+    index   = number
+    name    = string
+    cpu     = number
+    ram     = number
+   source   = string
+   user     = string
+   format   = string
+  }))
 }
-
-locals{
-my_hosts=toset(var.host_list)
-}
-
-
-
-
-

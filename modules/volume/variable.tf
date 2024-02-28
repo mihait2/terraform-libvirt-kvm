@@ -1,11 +1,17 @@
-variable "host_list"{
- type=list(string)
- default=["host1","host2","host3","host4","host5"]
+variable "vm_disk_configs" {
+  type = map(object({
+    name     = string
+    source   = string
+    user     = string
+    format   = string
+
+  }))
+  default = {
+    masterNode = {
+      name     = "masterNode"
+      source   = "https://cloud-images.ubuntu.com/releases/bionic/release/ubuntu-18.04-server-cloudimg-amd64.img"
+      user     = "milo"
+      format   = "qcow2"
+    }
+  }
 }
-
-locals{
-my_hosts=toset(var.host_list)
-}
-
-
-

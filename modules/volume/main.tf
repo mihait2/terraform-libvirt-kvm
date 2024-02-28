@@ -10,24 +10,28 @@ terraform {
 
 
 resource "libvirt_pool" "cluster" {
-  name = "clustermilo"
-  type = "dir"
-  path = "/home/milo/images"
+  for_each = var.vm_disk_configs
+    name = "${each.value.name}_pool"
+    type = "dir"
+  path = "/home/milo/images/${each.value.name}"
 }
 
-
-resource "libvirt_volume" "volumes" {
-        for_each=local.my_hosts
-	name = "${each.key}.qcow2"
-        pool = libvirt_pool.cluster.name
-        source = "https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img"
-        format = "qcow2"
+resource "libvirt_volume" "volumes"{
+ for_each = var.vm_disk_configs
+    name = "${each.value.name}_volume.${each.value.format}"
+    pool = libvirt_pool.cluster[each.key].name
+    source = each.value.source
+    format = each.value.format
 }
 
 
 
 data "template_file" "user_data" {
-  template = file("${path.module}/cloud_init.cfg")
+   for_each = var.vm_disk_configs
+    template = file("${path.module}/cloud_init.cfg")
+    vars = {
+        VM_USER = each.value.user
+    }
 }
 
 data "template_file" "network_config" {
@@ -36,12 +40,11 @@ data "template_file" "network_config" {
 
 
 
-
 resource "libvirt_cloudinit_disk" "cloudinit" {
-  name           = "cloudinit.iso"
-  user_data      = data.template_file.user_data.rendered
-  network_config = data.template_file.network_config.rendered
-  pool           = libvirt_pool.cluster.name
-} 
-
+  for_each = var.vm_disk_configs
+    name = "${each.value.name}_cloudinit.iso"
+    user_data = data.template_file.user_data[each.key].rendered
+    network_config = data.template_file.network_config.rendered
+    pool = libvirt_pool.cluster[each.key].name
+}
 
